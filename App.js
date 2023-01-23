@@ -1,112 +1,153 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React, {useEffect} from 'react';
+import {StatusBar} from 'react-native';
+import {ThemeProvider} from 'styled-components';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {setCustomText} from 'react-native-global-props';
+import {PERMISSIONS, checkMultiple} from 'react-native-permissions';
+import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  SendbirdUIKitContainer,
+  createNativeClipboardService,
+  createNativeFileService,
+  createNativeMediaService,
+  createNativeNotificationService,
+} from '@sendbird/uikit-react-native';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  LightUIKitTheme,
+  createTheme,
+} from '@sendbird/uikit-react-native-foundation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Clipboard from '@react-native-clipboard/clipboard';
+import CameraRoll from '@react-native-community/cameraroll';
+import RNFBMessaging from '@react-native-firebase/messaging';
+import Video from 'react-native-video';
+import * as DocumentPicker from 'react-native-document-picker';
+import * as FileAccess from 'react-native-file-access';
+import * as ImagePicker from 'react-native-image-picker';
+import * as Permissions from 'react-native-permissions';
+import * as CreateThumbnail from 'react-native-create-thumbnail';
+import {ToastProvider} from 'react-native-toast-notifications';
+import RootStackNavigation from '@navigations/RootStackNavigation';
+import AuthStackNavigation from '@navigations/AuthStackNavigation';
+import PermissionsNavigation from '@navigations/PermissionsNavigation';
+import {useUserStore} from '@libs/zustand';
+import theme from '@styles/theme';
 
-const Section = ({children, title}): Node => {
-  console.log('hi');
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+export default function App() {
+  // Root State
+  const {
+    userLoggedIn,
+    userPermissions,
+    setUserLoggedIn,
+    setUserPermissions,
+    isFetchedSignIn,
+  } = useUserStore();
+  const myCustomDarkTheme = createTheme({
+    colors: palette => ({
+      ...LightUIKitTheme.colors,
+      primary: '#557FE6',
+      secondary: palette.secondary200,
+      error: palette.error200,
+      background: 'white',
+      text: palette.onBackgroundDark01,
+    }),
+  });
+  const ClipboardService = createNativeClipboardService(Clipboard);
+  const NotificationService = createNativeNotificationService({
+    messagingModule: RNFBMessaging,
+    permissionModule: Permissions,
+  });
+  const FileService = createNativeFileService({
+    fsModule: FileAccess,
+    permissionModule: Permissions,
+    imagePickerModule: ImagePicker,
+    mediaLibraryModule: CameraRoll,
+    documentPickerModule: DocumentPicker,
+  });
+  const MediaService = createNativeMediaService({
+    VideoComponent: Video,
+    thumbnailModule: CreateThumbnail,
+  });
+  const customTextProps = {
+    style: {
+      color: '#242830',
+      fontSize: 14,
+      letterSpacing: -0.1,
+    },
+  };
+  setCustomText(customTextProps);
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const checkMultiplePermissions = () => {
+    checkMultiple([
+      PERMISSIONS.ANDROID.CAMERA,
+      PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+    ]).then(response => {
+      if (
+        response['android.permission.CAMERA'] === 'granted' &&
+        response['android.permission.READ_EXTERNAL_STORAGE'] === 'granted'
+      ) {
+        setUserPermissions(true);
+      } else {
+        setUserPermissions(false);
+      }
+    });
   };
 
+  const checkUserSession = async () => {
+    try {
+      const access = await AsyncStorage.getItem('access');
+      if (access !== null) {
+        setUserLoggedIn(true);
+      }
+    } catch (e) {
+      setUserLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkMultiplePermissions();
+  }, []);
+
+  useEffect(() => {
+    checkUserSession();
+  }, [isFetchedSignIn]);
+
+  useEffect(() => {
+    try {
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 2000);
+    } catch (e) {}
+  }, []);
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <SendbirdUIKitContainer
+      styles={{theme: myCustomDarkTheme}}
+      appId={'92262BE9-0B2F-41B8-8E54-9CEB7966D5F5'}
+      chatOptions={{localCacheStorage: AsyncStorage}}
+      platformServices={{
+        file: FileService,
+        notification: NotificationService,
+        clipboard: ClipboardService,
+        media: MediaService,
+      }}>
+      <SafeAreaProvider>
+        <ThemeProvider theme={theme}>
+          <ToastProvider placement="top" offsetTop={50} duration={3000}>
+            <StatusBar animated={true} barStyle="dark-content" />
+            <NavigationContainer>
+              {userLoggedIn ? (
+                <RootStackNavigation />
+              ) : userPermissions ? (
+                <AuthStackNavigation />
+              ) : (
+                <PermissionsNavigation />
+              )}
+            </NavigationContainer>
+          </ToastProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </SendbirdUIKitContainer>
   );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+}
