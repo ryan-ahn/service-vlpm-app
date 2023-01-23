@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {StatusBar} from 'react-native';
-import {ThemeProvider} from 'styled-components';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {setCustomText} from 'react-native-global-props';
-import {PERMISSIONS, checkMultiple} from 'react-native-permissions';
-import {NavigationContainer} from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
+import { ThemeProvider } from 'styled-components';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { setCustomText } from 'react-native-global-props';
+import { PERMISSIONS, checkMultiple } from 'react-native-permissions';
+import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {
   SendbirdUIKitContainer,
@@ -13,10 +13,7 @@ import {
   createNativeMediaService,
   createNativeNotificationService,
 } from '@sendbird/uikit-react-native';
-import {
-  LightUIKitTheme,
-  createTheme,
-} from '@sendbird/uikit-react-native-foundation';
+import { LightUIKitTheme, createTheme } from '@sendbird/uikit-react-native-foundation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
 import CameraRoll from '@react-native-community/cameraroll';
@@ -27,22 +24,17 @@ import * as FileAccess from 'react-native-file-access';
 import * as ImagePicker from 'react-native-image-picker';
 import * as Permissions from 'react-native-permissions';
 import * as CreateThumbnail from 'react-native-create-thumbnail';
-import {ToastProvider} from 'react-native-toast-notifications';
+import { ToastProvider } from 'react-native-toast-notifications';
 import RootStackNavigation from '@navigations/RootStackNavigation';
 import AuthStackNavigation from '@navigations/AuthStackNavigation';
 import PermissionsNavigation from '@navigations/PermissionsNavigation';
-import {useUserStore} from '@libs/zustand';
+import { useUserStore } from '@libs/zustand';
 import theme from '@styles/theme';
 
 export default function App() {
   // Root State
-  const {
-    userLoggedIn,
-    userPermissions,
-    setUserLoggedIn,
-    setUserPermissions,
-    isFetchedSignIn,
-  } = useUserStore();
+  const { userLoggedIn, userPermissions, setUserLoggedIn, setUserPermissions, isFetchedSignIn } =
+    useUserStore();
   const myCustomDarkTheme = createTheme({
     colors: palette => ({
       ...LightUIKitTheme.colors,
@@ -79,19 +71,18 @@ export default function App() {
   setCustomText(customTextProps);
 
   const checkMultiplePermissions = () => {
-    checkMultiple([
-      PERMISSIONS.ANDROID.CAMERA,
-      PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-    ]).then(response => {
-      if (
-        response['android.permission.CAMERA'] === 'granted' &&
-        response['android.permission.READ_EXTERNAL_STORAGE'] === 'granted'
-      ) {
-        setUserPermissions(true);
-      } else {
-        setUserPermissions(false);
-      }
-    });
+    checkMultiple([PERMISSIONS.ANDROID.CAMERA, PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE]).then(
+      response => {
+        if (
+          response['android.permission.CAMERA'] === 'granted' &&
+          response['android.permission.READ_EXTERNAL_STORAGE'] === 'granted'
+        ) {
+          setUserPermissions(true);
+        } else {
+          setUserPermissions(false);
+        }
+      },
+    );
   };
 
   const checkUserSession = async () => {
@@ -123,15 +114,16 @@ export default function App() {
 
   return (
     <SendbirdUIKitContainer
-      styles={{theme: myCustomDarkTheme}}
+      styles={{ theme: myCustomDarkTheme }}
       appId={'92262BE9-0B2F-41B8-8E54-9CEB7966D5F5'}
-      chatOptions={{localCacheStorage: AsyncStorage}}
+      chatOptions={{ localCacheStorage: AsyncStorage }}
       platformServices={{
         file: FileService,
         notification: NotificationService,
         clipboard: ClipboardService,
         media: MediaService,
-      }}>
+      }}
+    >
       <SafeAreaProvider>
         <ThemeProvider theme={theme}>
           <ToastProvider placement="top" offsetTop={50} duration={3000}>

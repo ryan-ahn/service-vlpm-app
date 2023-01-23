@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "756578487472",
+    "project_id": "clients-chat-new",
+    "storage_bucket": "clients-chat-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756578487472:android:caae27968f1469ab25ff75",
+        "android_client_info": {
+          "package_name": "com.vlpmclientsrelease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756578487472-ogej1bgfbc53m8alp68uc17b48up8tca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd7sHeOSgCKBGqJ20ZsrPbYGndMdGUsuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756578487472-ogej1bgfbc53m8alp68uc17b48up8tca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

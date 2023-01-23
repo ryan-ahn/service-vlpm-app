@@ -4,9 +4,8 @@
  * Desc : index
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
-  PermissionsAndroid,
   Dimensions,
   View,
   ScrollView,
@@ -20,42 +19,12 @@ import { css } from 'styled-components';
 import { useMainStore } from '@libs/zustand';
 import Icons from '@components/Common/Icons';
 import StackHeader from '@components/Common/Header/StackHeader';
-import NaverMapView, { Marker } from '../../map';
 
 export default function StoreInfoScreen({ navigation, route }) {
   // Root State
   const { promotionStoreDetail, isLoadingStoreDetail } = useMainStore();
-  console.log(promotionStoreDetail);
   // Value
   const screenHeight = Dimensions.get('window').height;
-  const P0 = { latitude: 37.52262570883575, longitude: 127.03890891761719 };
-
-  // const requestLocationPermission = async () => {
-  //   if (Platform.OS !== 'android') return;
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         title: 'Location Permission',
-  //         message: 'show my location need Location permission',
-  //         buttonNeutral: 'Ask Me Later',
-  //         buttonNegative: 'Cancel',
-  //         buttonPositive: 'OK',
-  //       },
-  //     );
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       console.log('You can use the location');
-  //     } else {
-  //       console.log('Location permission denied');
-  //     }
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   requestLocationPermission();
-  // }, []);
 
   if (promotionStoreDetail && !isLoadingStoreDetail) {
     return (
@@ -98,25 +67,6 @@ export default function StoreInfoScreen({ navigation, route }) {
                 <Tag key={index}>{`#${item}`}</Tag>
               ))}
             </TagBox>
-            {/* <LabelText>매장 위치</LabelText>
-            <>
-              <NaverMapView
-                style={{ width: '100%', height: 500 }}
-                showsMyLocationButton={true}
-                center={{ ...P0, zoom: 16 }}
-                // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-                // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
-                useTextureView
-              >
-                <Marker
-                  coordinate={P0}
-                  caption={{
-                    text: promotionStoreDetail.name,
-                    textSize: 18,
-                  }}
-                />
-              </NaverMapView>
-            </> */}
           </ContentBlock>
         </ScrollView>
       </Wrapper>

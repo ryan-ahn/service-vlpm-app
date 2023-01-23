@@ -14,7 +14,7 @@ import { EMAIL_REGEX, NAME_REGEX, PW_REGEX, MOBILE_REGEX } from '@libs/utils/ver
 import StackHeader from '@components/Common/Header/StackHeader';
 import InputEmail from './InputEmail';
 import InputPassword from './InputPassword';
-import InputName from './inputName';
+import InputName from './InputName';
 import InputContact from './InputContact';
 
 export default function SignUpScreen({ navigation, route }) {
