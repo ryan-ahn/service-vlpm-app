@@ -14,6 +14,7 @@
 		3EA2D22E63DB979304953BCC /* Pods_vlpmclientsrelease_vlpmclientsreleaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ABEB4A95287F83B1A40BCC8 /* Pods_vlpmclientsrelease_vlpmclientsreleaseTests.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C28C3E15151952D0876A4590 /* Pods_vlpmclientsrelease.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA53A1BA61601F5CDEB972C /* Pods_vlpmclientsrelease.framework */; };
+		F284FBC1297F0FCA0086F46F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F284FBC0297F0FCA0086F46F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		9FA53A1BA61601F5CDEB972C /* Pods_vlpmclientsrelease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vlpmclientsrelease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA40B8BB1B031E1EC5042CAA /* Pods-vlpmclientsrelease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vlpmclientsrelease.debug.xcconfig"; path = "Target Support Files/Pods-vlpmclientsrelease/Pods-vlpmclientsrelease.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F284FBC0297F0FCA0086F46F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F284FBC0297F0FCA0086F46F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* vlpmclientsrelease */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* vlpmclientsreleaseTests */,
@@ -243,6 +246,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F284FBC1297F0FCA0086F46F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
