@@ -35,16 +35,6 @@ export default function App() {
   // Root State
   const { userLoggedIn, userPermissions, setUserLoggedIn, setUserPermissions, isFetchedSignIn } =
     useUserStore();
-  const myCustomDarkTheme = createTheme({
-    colors: palette => ({
-      ...LightUIKitTheme.colors,
-      primary: '#557FE6',
-      secondary: palette.secondary200,
-      error: palette.error200,
-      background: 'white',
-      text: palette.onBackgroundDark01,
-    }),
-  });
   const ClipboardService = createNativeClipboardService(Clipboard);
   const NotificationService = createNativeNotificationService({
     messagingModule: RNFBMessaging,
@@ -114,7 +104,6 @@ export default function App() {
 
   return (
     <SendbirdUIKitContainer
-      styles={{ theme: myCustomDarkTheme }}
       appId={'92262BE9-0B2F-41B8-8E54-9CEB7966D5F5'}
       chatOptions={{ localCacheStorage: AsyncStorage }}
       platformServices={{
