@@ -19,6 +19,7 @@ import { useToast } from 'react-native-toast-notifications';
 import { useUserStore, useModalStore } from '@libs/zustand';
 import StackHeader from '@components/Common/Header/StackHeader';
 import StackTitle from '@components/Common/Title/StackTitle';
+import analytics from '@react-native-firebase/analytics';
 
 export default function SignInScreen({ navigation, route }) {
   // Root State
@@ -46,6 +47,10 @@ export default function SignInScreen({ navigation, route }) {
 
   const onPressSignIn = useCallback(() => {
     fetchSignIn({ email: email, password: password });
+    analytics().logLogin({
+      method: 'email',
+    });
+
   }, [userDetail, userLoggedIn, email, password, isLoadingSignIn]);
 
   const onPressRouteToSignUp = useCallback(() => {

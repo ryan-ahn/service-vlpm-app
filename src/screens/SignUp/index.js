@@ -16,6 +16,7 @@ import InputEmail from './InputEmail';
 import InputPassword from './InputPassword';
 import InputName from './InputName';
 import InputContact from './InputContact';
+import analytics from '@react-native-firebase/analytics';
 
 export default function SignUpScreen({ navigation, route }) {
   // Root State
@@ -86,6 +87,9 @@ export default function SignUpScreen({ navigation, route }) {
 
   const onPressSignUp = useCallback(async () => {
     fetchSignUp({ email: email, password: password, name: name, contact: contact });
+    analytics().logSignUp({
+      method: 'email',
+    });
   }, [email, password, name, contact, isLoadingSignUp]);
 
   useEffect(() => {
