@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setCustomText } from 'react-native-global-props';
 import { PERMISSIONS, checkMultiple } from 'react-native-permissions';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {
   SendbirdUIKitContainer,
@@ -30,11 +30,14 @@ import AuthStackNavigation from '@navigations/AuthStackNavigation';
 import PermissionsNavigation from '@navigations/PermissionsNavigation';
 import { useUserStore } from '@libs/zustand';
 import theme from '@styles/theme';
+import analytics from '@react-native-firebase/analytics';
 
 export default function App() {
   // Root State
   const { userLoggedIn, userPermissions, setUserLoggedIn, setUserPermissions, isFetchedSignIn } =
     useUserStore();
+  const navigationRef = useNavigationContainerRef();
+  const routeNameRef = useRef();
   const ClipboardService = createNativeClipboardService(Clipboard);
   const NotificationService = createNativeNotificationService({
     messagingModule: RNFBMessaging,
@@ -117,7 +120,30 @@ export default function App() {
         <ThemeProvider theme={theme}>
           <ToastProvider placement="top" offsetTop={50} duration={3000}>
             <StatusBar animated={true} barStyle="dark-content" />
-            <NavigationContainer>
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                routeNameRef.current = navigationRef.getCurrentRoute().name;
+              }}
+              onStateChange={() => {
+                const previousScreenName = routeNameRef.current;
+                const currentRoute = navigationRef.current.getCurrentRoute();
+                const currentScreenName = `${currentRoute?.name}_${Object.values(
+                  currentRoute?.params || {},
+                ).join('/')}`;
+
+                const trackScreenView = () => { // ga4 screen_view 추적 코드
+                  analytics().logScreenView({
+                    screen_name: currentScreenName,
+                    screen_class: currentRoute.name,
+                  });
+                };
+
+                if (currentRoute && previousScreenName !== currentScreenName) {
+                  trackScreenView();
+                }
+              }}
+            >
               {userLoggedIn ? (
                 <RootStackNavigation />
               ) : userPermissions ? (
