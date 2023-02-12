@@ -34,7 +34,7 @@ export const useUserStore = create(set => ({
   fetchSignIn: async ({ email, password }) => {
     set(() => ({ isLoadingSignIn: true, isFetchedSignIn: false }));
     try {
-      const response = await axios.post('https://api.vlpmcorp.com/dev/auth/signin', {
+      const response = await axios.post('https://api.vlpmcorp.com/v1/auth/signin', {
         email: email,
         password: password,
       });
@@ -95,7 +95,7 @@ export const useSignUpStore = create(set => ({
   fetchSignUp: async ({ email, password, name, contact }) => {
     set(() => ({ isLoadingSignUp: true, isFetchedSignUp: false }));
     try {
-      const response = await axios.post('https://api.vlpmcorp.com/dev/auth/signup', {
+      const response = await axios.post('https://api.vlpmcorp.com/v1/auth/signup', {
         type: 'customer',
         email: email,
         password: password,

@@ -4,7 +4,7 @@
  * Desc : useEstimateStore
  */
 
-import create from 'zustand';
+import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -72,7 +72,7 @@ export const useCallStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingCall: true, isFetchedCall: false }));
     try {
-      const response = await axios.post('https://api.vlpmcorp.com/dev/call', payload, {
+      const response = await axios.post('https://api.vlpmcorp.com/v1/call', payload, {
         headers: {
           Authorization: access,
         },
@@ -94,7 +94,7 @@ export const useCallStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingCallList: true, isFetchedCallList: false }));
     try {
-      const response = await axios.get('https://api.vlpmcorp.com/dev/call', {
+      const response = await axios.get('https://api.vlpmcorp.com/v1/call', {
         headers: {
           Authorization: access,
         },
@@ -117,7 +117,7 @@ export const useCallStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingSuccessDeal: true, isFetchedSuccessDeal: false }));
     try {
-      const response = await axios.get('https://api.vlpmcorp.com/dev/success_deal', {
+      const response = await axios.get('https://api.vlpmcorp.com/v1/success_deal', {
         headers: {
           Authorization: access,
         },
@@ -136,6 +136,34 @@ export const useCallStore = create(set => ({
       }));
     }
   },
+
+  fetchUploadImage: async data => {
+    const access = await AsyncStorage.getItem('access');
+    set(() => ({ isLoadingSuccessDeal: true, isFetchedSuccessDeal: false }));
+    try {
+      const response = await axios.post('https://api.vlpmcorp.com/v1/upload', data, {
+        headers: {
+          Authorization: access,
+        },
+      });
+
+      console.log(response);
+      set(() => ({
+        uploadImage: response.data.key,
+        isLoadingSuccessDeal: false,
+        isFetchedSuccessDeal: true,
+      }));
+    } catch (e) {
+      console.log(e);
+      set(() => ({
+        errorMessage: e.response?.data?.message ?? e.message,
+        hasErrorsSuccessDeal: true,
+        isLoadingSuccessDeal: false,
+        isFetchedSuccessDeal: false,
+      }));
+    }
+  },
+
   // Init
   initStore: () =>
     set({

@@ -24,7 +24,7 @@ export const useEstimateStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingEstimateList: true, isFetchedEstimateList: false }));
     try {
-      const response = await axios.get('https://api.vlpmcorp.com/dev/estimate', {
+      const response = await axios.get('https://api.vlpmcorp.com/v1/estimate', {
         headers: {
           Authorization: access,
         },
@@ -47,7 +47,7 @@ export const useEstimateStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingCall: true, isFetchedCall: false }));
     try {
-      const response = await axios.post('https://api.vlpmcorp.com/dev/chat', payload, {
+      const response = await axios.post('https://api.vlpmcorp.com/v1/chat', payload, {
         headers: {
           Authorization: access,
         },

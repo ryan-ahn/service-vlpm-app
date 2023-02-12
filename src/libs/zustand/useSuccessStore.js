@@ -24,7 +24,7 @@ export const useSuccessStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingSuccessDeal: true, isFetchedSuccessDeal: false }));
     try {
-      const response = await axios.get('https://api.vlpmcorp.com/dev/success_deal', {
+      const response = await axios.get('https://api.vlpmcorp.com/v1/success_deal', {
         headers: {
           Authorization: access,
         },
@@ -47,7 +47,7 @@ export const useSuccessStore = create(set => ({
     const access = await AsyncStorage.getItem('access');
     set(() => ({ isLoadingSuccessDealDetail: true, isFetchedSuccessDealDetail: false }));
     try {
-      const response = await axios.get(`https://api.vlpmcorp.com/dev/success_deal/${id}`, {
+      const response = await axios.get(`https://api.vlpmcorp.com/v1/success_deal/${id}`, {
         headers: {
           Authorization: access,
         },

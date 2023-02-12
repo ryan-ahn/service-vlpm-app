@@ -6,7 +6,6 @@
 
 import React, { useCallback } from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
-import { Buffer } from 'buffer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import { useModalStore, useCallStore } from '@libs/zustand';
@@ -14,7 +13,8 @@ import { useModalStore, useCallStore } from '@libs/zustand';
 export default function EstimateUploadModal() {
   // Root State
   const { isOpen, modalType, closeModal } = useModalStore();
-  const { uploadImage, setUploadImage, previewImage, setPreviewImage } = useCallStore();
+  const { uploadImage, setUploadImage, previewImage, setPreviewImage, fetchUploadImage } =
+    useCallStore();
 
   const onPressImagePicker = useCallback(
     async type => {
@@ -25,9 +25,11 @@ export default function EstimateUploadModal() {
               return;
             } else if (response.assets && response.assets.length !== 0) {
               const file = response.assets[0];
-              const uriPath = file.uri.split('//').pop();
-              setUploadImage(file.fileName);
-              setPreviewImage('file://' + uriPath);
+              const formdata = new FormData();
+              formdata.append('file', file.uri);
+              fetchUploadImage(data);
+              // setUploadImage(file.fileName);
+              setPreviewImage(file.uri);
             }
           }).catch(e => console.log('error', e));
           closeModal();
@@ -38,9 +40,11 @@ export default function EstimateUploadModal() {
               return;
             } else if (response.assets && response.assets.length !== 0) {
               const file = response.assets[0];
-              const uriPath = file.uri.split('//').pop();
-              setUploadImage(file.fileName);
-              setPreviewImage('file://' + uriPath);
+              const formdata = new FormData();
+              formdata.append('file', file.uri);
+              fetchUploadImage(formdata);
+              // setUploadImage(file.fileName);
+              setPreviewImage(file.uri);
             }
           }).catch(e => console.log(e));
           closeModal();

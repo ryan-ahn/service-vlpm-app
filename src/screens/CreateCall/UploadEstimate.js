@@ -46,7 +46,7 @@ export default function UploadEstimate() {
   return (
     <Wrapper>
       <EstimateUploadModal />
-      {/* <StackTitle
+      <StackTitle
         title={STACK_TITLE.selectEstimate.title}
         description={STACK_TITLE.selectEstimate.description}
         option={true}
@@ -56,7 +56,7 @@ export default function UploadEstimate() {
           <Icons icon={'estimateUpload'} size={58} />
         </IconBox>
         {renderPreviewImage()}
-      </ImageBlock> */}
+      </ImageBlock>
       <StackTitle
         title={STACK_TITLE.leaveMessage.title}
         description={STACK_TITLE.leaveMessage.description}
