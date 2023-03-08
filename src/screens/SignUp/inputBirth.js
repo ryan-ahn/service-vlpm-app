@@ -1,7 +1,7 @@
 /**
  * Author : Ryan
  * Date : 2022-07-31
- * Desc : 1-FirstStep
+ * Desc :
  */
 
 import React, { useState } from 'react';
@@ -11,25 +11,25 @@ import { css } from 'styled-components';
 import { useSignUpStore } from '@libs/zustand';
 import StackTitle from '@components/Common/Title/StackTitle';
 
-export default function InputName() {
+export default function InputBirth() {
   // Root State
-  const { setName } = useSignUpStore();
+  const { birth, setBirth } = useSignUpStore();
   // State
   const [focusedItem, setFocusedItem] = useState(false);
 
   return (
     <Wrapper>
       <TitleBox>
-        <StackTitle title={'회원가입을 위해\n이름을 입력해 주세요'} />
+        <StackTitle title={'회원가입을 위해\n생년월일을 입력해 주세요'} />
       </TitleBox>
       <InputBox>
-        <LabelText>이름</LabelText>
+        <LabelText>생년월일</LabelText>
         <Input
           attrFocus={focusedItem}
-          placeholder={'예: 홍길동'}
+          placeholder={'예: 19910101'}
           onFocus={() => setFocusedItem(true)}
           onBlur={() => setFocusedItem(false)}
-          onChangeText={text => setName(text)}
+          onChangeText={text => setBirth(text)}
         ></Input>
       </InputBox>
     </Wrapper>

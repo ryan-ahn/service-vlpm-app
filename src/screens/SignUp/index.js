@@ -10,12 +10,19 @@ import styled from 'styled-components/native';
 import { css } from 'styled-components';
 import { useToast } from 'react-native-toast-notifications';
 import { useSignUpStore } from '@libs/zustand';
-import { EMAIL_REGEX, NAME_REGEX, PW_REGEX, MOBILE_REGEX } from '@libs/utils/verification';
+import {
+  EMAIL_REGEX,
+  NAME_REGEX,
+  PW_REGEX,
+  MOBILE_REGEX,
+  BIRTH_REGEX,
+} from '@libs/utils/verification';
 import StackHeader from '@components/Common/Header/StackHeader';
 import InputEmail from './InputEmail';
 import InputPassword from './InputPassword';
 import InputName from './InputName';
 import InputContact from './InputContact';
+import InputBirth from './inputBirth';
 
 export default function SignUpScreen({ navigation, route }) {
   // Root State
@@ -26,6 +33,7 @@ export default function SignUpScreen({ navigation, route }) {
     password,
     repassword,
     name,
+    birth,
     contact,
     fetchSignUp,
     isLoadingSignUp,
@@ -77,6 +85,9 @@ export default function SignUpScreen({ navigation, route }) {
           setSignUpStep('name');
           break;
         case 'name':
+          setSignUpStep('birth');
+          break;
+        case 'birth':
           setSignUpStep('contact');
           break;
       }
@@ -85,13 +96,13 @@ export default function SignUpScreen({ navigation, route }) {
   }, [signUpStep]);
 
   const onPressSignUp = useCallback(async () => {
-    fetchSignUp({ email: email, password: password, name: name, contact: contact });
+    fetchSignUp({ email: email, password: password, name: name, birth: birth, contact: contact });
   }, [email, password, name, contact, isLoadingSignUp]);
 
   useEffect(() => {
     if (hasErrorsSignUp) {
       toast.show(errorMessage);
-      initSignInError();
+      initSignUpStore();
     }
   }, [hasErrorsSignUp, errorMessage]);
 
@@ -147,6 +158,20 @@ export default function SignUpScreen({ navigation, route }) {
             </NextButtonBox>
           </ContentBox>
         );
+      case 'birth':
+        return (
+          <ContentBox style={{ opacity: fadeAnim }}>
+            <InputBirth />
+            <NextButtonBox
+              style={{ width: screenWidth - 40 }}
+              attrDisabled={BIRTH_REGEX.test(birth) === false}
+              disabled={BIRTH_REGEX.test(birth) === false}
+              onPress={onPressNextStep}
+            >
+              <NextButtonText>{'다음'}</NextButtonText>
+            </NextButtonBox>
+          </ContentBox>
+        );
       case 'contact':
         return (
           <ContentBox style={{ opacity: fadeAnim }}>
@@ -166,7 +191,7 @@ export default function SignUpScreen({ navigation, route }) {
           </ContentBox>
         );
     }
-  }, [signUpStep, email, password, repassword, name, contact, isLoadingSignUp]);
+  }, [signUpStep, email, password, repassword, name, birth, contact, isLoadingSignUp]);
 
   return (
     <Wrapper style={{ height: screenHeight }}>

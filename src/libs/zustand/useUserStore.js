@@ -77,6 +77,7 @@ export const useSignUpStore = create(set => ({
   password: '',
   repassword: '',
   name: '',
+  birth: '',
   contact: '',
   initSignUpStep: () => set(() => ({ signUpStep: 0 })),
   initPassword: () => set({ password: '', repassword: '' }),
@@ -85,6 +86,7 @@ export const useSignUpStore = create(set => ({
   setPassword: payload => set({ password: payload }),
   setRePassword: payload => set({ repassword: payload }),
   setName: payload => set({ name: payload }),
+  setBirth: payload => set({ birth: payload }),
   setContact: payload => set({ contact: payload }),
   // Async State
   errorMessage: '',
@@ -92,7 +94,7 @@ export const useSignUpStore = create(set => ({
   isFetchedSignUp: false,
   hasErrorsSignUp: false,
   // Fetch
-  fetchSignUp: async ({ email, password, name, contact }) => {
+  fetchSignUp: async ({ email, password, name, birth, contact }) => {
     set(() => ({ isLoadingSignUp: true, isFetchedSignUp: false }));
     try {
       const response = await axios.post('https://api.vlpmcorp.com/dev/auth/signup', {
@@ -100,6 +102,7 @@ export const useSignUpStore = create(set => ({
         email: email,
         password: password,
         name: name,
+        birth: birth,
         contact: contact,
       });
       set(() => ({

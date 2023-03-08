@@ -13,7 +13,7 @@ import StackTitle from '@components/Common/Title/StackTitle';
 
 export default function InputContact() {
   // Root State
-  const { contact, setContact } = useSignUpStore();
+  const { setContact } = useSignUpStore();
   // State
   const [focusedItem, setFocusedItem] = useState(false);
 
