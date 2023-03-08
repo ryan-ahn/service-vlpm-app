@@ -28,6 +28,16 @@ export default function SelectModel({ navigation }) {
     [productType],
   );
 
+  const onChangeCategoryModelName = useCallback(
+    (text, selectedId) => {
+      const copiedCategoryList = [...categoryList];
+      const copiedCategoryProduct = [...categoryList].filter(item => item.id === selectedId)[0];
+      copiedCategoryList.filter(item => item === copiedCategoryProduct)[0].modelName = text;
+      setCategoryModelName(copiedCategoryList);
+    },
+    [categoryList, productType],
+  );
+
   const renderList = useCallback(() => {
     return (
       <ItemWrapper>
@@ -56,7 +66,7 @@ export default function SelectModel({ navigation }) {
                   : '예: ' + filteredItem.ex
               }
               onPressIn={() => setFocusedItem(filteredItem.id)}
-              onChangeText={text => setCategoryModelName(filteredItem.id, text)}
+              onChangeText={text => onChangeCategoryModelName(text, filteredItem.id)}
             />
             <ButtonBox
               attrDisabled={categoryList.filter(item => item.id === filteredItem.id)[0].modelName}

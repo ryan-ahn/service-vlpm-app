@@ -22,7 +22,6 @@ export default function PermissionsSreen({ navigation }) {
     if (Platform.OS === 'android') {
       requestMultiple([PERMISSIONS.ANDROID.CAMERA, PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE]).then(
         response => {
-          console.log(response);
           setUserPermissions(true);
         },
       );

@@ -4,7 +4,7 @@
  * Desc : useModalStore
  */
 
-import create from 'zustand';
+import { create } from 'zustand';
 
 export const useModalStore = create(set => ({
   isOpen: false,

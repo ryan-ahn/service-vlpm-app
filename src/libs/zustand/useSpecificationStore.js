@@ -4,7 +4,7 @@
  * Desc : useSpecificationStore
  */
 
-import create from 'zustand';
+import { create } from 'zustand';
 
 export const useSpecificationStore = create(set => ({
   productType: 0,

@@ -5,7 +5,7 @@
  */
 
 import axios from 'axios';
-import create from 'zustand';
+import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useUserStore = create(set => ({

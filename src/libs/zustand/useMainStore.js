@@ -4,7 +4,7 @@
  * Desc : useMainStore
  */
 
-import create from 'zustand';
+import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

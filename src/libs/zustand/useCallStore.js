@@ -4,7 +4,7 @@
  * Desc : useEstimateStore
  */
 
-import create from 'zustand';
+import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -63,8 +63,7 @@ export const useCallStore = create(set => ({
         ? state.categoryList.filter(ele => ele.id !== id)
         : state.categoryList.concat({ id, modelName: null, tags: [] }),
     })),
-  setCategoryModelName: (id, value) =>
-    set(state => (state.categoryList.filter(item => item.id === id)[0].modelName = value)),
+  setCategoryModelName: payload => set({ categoryList: payload }),
   setCategoryTagList: payload => set({ categoryList: payload }),
   setTempEstimateType: payload => set({ tempEstimateType: payload }),
   // Fetch
