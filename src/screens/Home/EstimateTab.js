@@ -30,7 +30,7 @@ export default function EstimateTabScreen({ navigation }) {
     initEstimateListStore,
     initEstimateChannelUrl,
   } = useEstimateStore();
-  console.log(estimateList);
+
   // State
   const [focusedTab, setFocusedTab] = useState('estimate');
   // value

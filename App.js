@@ -120,7 +120,7 @@ export default function App() {
             <NavigationContainer>
               {userLoggedIn ? (
                 <RootStackNavigation />
-              ) : !userPermissions ? (
+              ) : userPermissions ? (
                 <AuthStackNavigation />
               ) : (
                 <PermissionsNavigation />
