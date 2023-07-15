@@ -5,15 +5,15 @@
 
 # Introduction
 
-- Corporation : (주)VLPM
-- Summary : 전국 가전제품 견적비교 모바일앱(유저용)
-- Developer : Ryan(github.com/ryan-ahn)
-- Service : [앱스토어](https://play.google.com/store/apps/details?id=com.vlpmclientsrelease&hl=ko-KR)
+- Corporation: (주)VLPM
+- Summary: 전국 가전제품 견적비교 모바일앱(유저용)
+- Developer: Ryan(github.com/ryan-ahn)
+- Service: [앱스토어](https://play.google.com/store/apps/details?id=com.vlpmclientsrelease&hl=ko-KR)
 
 # Technical stack
 
 - View Framework: React Native Cli
-- Server Stack: Amplify
+- Server Core: Amplify
 - DataBase: RDS
 - Library: Zustand, Sendbird 등
 - CSS: styled-components
