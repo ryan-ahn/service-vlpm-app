@@ -1,7 +1,7 @@
 # VLPM Client
 > 클릭해서 영상으로 이동
 
-[![Watch the video](https://platform-client-release.s3.ap-northeast-2.amazonaws.com/temp/vlpm.png)](https://youtu.be/-XkDzxSvvK8)
+[![Watch the video](https://storage.googleapis.com/ryan-ahn.appspot.com/public/vlpm.png)](https://youtu.be/-XkDzxSvvK8)
 
 # Introduction
 
